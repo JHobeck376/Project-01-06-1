@@ -12,9 +12,52 @@
 // global variables
 var formValidity = true;
 
+// function 
+function validateRequired() {
+    var inputElms = document.querySelectorAll("#contactinfo input");
+    var errorDiv = document.getElementById("errorText");
+    formValidity = false;
+    var fieldsetValidity = true;
+    var elementNum = inputElms.length;
+    var currentElement;
+    try {
+        for (var i = 0; i < elementNum; i++){
+            currentElement = inputElms[i];
+            if (currentElement.value === ""){
+                currentElement.style.background = "rgb(255, 233, 233)";
+                fieldsetValidity = false;
+            } else {
+                currentElement.style.background = "white";
+            }
+        }
+        if (fieldsetValidity === false){
+            throw "Please fill out all of the Required fields.";
+        } else {
+            errorDiv.style.display = "none";
+            errorDiv.innerHTML = "";
+        }
+    } catch (msg) {
+        errorDiv.style.display = "block";
+        errorDiv.innerHTML = msg;
+        formValidity = false;
+    }
+}
+
 // function to validate form
-function validateForm() {
-    alert("success");
+function validateForm(submit) {
+    // This disables the submit button
+    if (submit.preventDefault){
+        submit.preventDefault();
+    } else {
+        submit.returnValue = false;
+    }
+    formValidity = true;
+    
+    validateRequired();
+    
+    if (formValidity === true){
+        document.getElementsByTagName("form")[0].submit();
+    }
 }
 
 // function to create event listeners
