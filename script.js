@@ -35,6 +35,7 @@ function validateRequired() {
         } else {
             errorDiv.style.display = "none";
             errorDiv.innerHTML = "";
+            formValidity = true;
         }
     } catch (msg) {
         errorDiv.style.display = "block";
